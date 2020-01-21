@@ -34,7 +34,7 @@ public class Main {
         checkRoot();
         CommandManager.registerCommand();
         TFTPServer.init();
-        LogManager.log(LogType.INFO, "Starting TFTP server", true);
+        LogManager.log(LogType.INFO, "Starting TFTP server " + version, true);
         TFTPServer.startServer();
         listenCommands();
     }
