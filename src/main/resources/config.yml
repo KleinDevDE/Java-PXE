@@ -1,0 +1,12 @@
+# Enable/Dsiable debug mode. Trace = detailed information about running process
+# on | off | trace
+debug: trace
+
+tftp_server:
+  # Set listening IP if TFTP server
+  ip: "0.0.0.0"
+  # Set listening Port of TFTP server (default 69)
+  port: 69
+
+# path of default files
+default_path: "default/"
