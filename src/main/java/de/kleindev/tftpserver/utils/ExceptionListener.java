@@ -1,7 +1,5 @@
 package de.kleindev.tftpserver.utils;
 
-
-;
 import de.kleindev.tftpserver.objects.LogType;
 
 import java.io.*;

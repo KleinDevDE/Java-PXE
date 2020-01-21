@@ -1,6 +1,5 @@
 package de.kleindev.tftpserver.utils.configuration.file;
 
-import de.kleindev.tftpserver.utils.configuration.*;
 import de.kleindev.tftpserver.utils.configuration.Configuration;
 import de.kleindev.tftpserver.utils.configuration.MemoryConfiguration;
 import de.kleindev.tftpserver.utils.configuration.MemoryConfigurationOptions;

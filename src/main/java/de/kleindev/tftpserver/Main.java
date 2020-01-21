@@ -4,7 +4,6 @@ import de.kleindev.tftpserver.objects.LogType;
 import de.kleindev.tftpserver.utils.*;
 import de.kleindev.tftpserver.utils.configuration.file.FileConfiguration;
 import de.kleindev.tftpserver.utils.configuration.file.YamlConfiguration;
-import de.kleindev.tftpserver.utils.*;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.io.*;
