@@ -1,7 +1,11 @@
 package de.kleindev.tftpserver.objects;
 
-import java.net.*;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 //////////////////////////////////////////////////////////////////////////////
 //GENERAL packet: define the packet structure, necessary members and methods// 
@@ -115,7 +119,7 @@ public class TFTPpacket {
     }
 
     protected String get(int at, byte del) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         while (message[at] != del) result.append((char) message[at++]);
         return result.toString();
     }

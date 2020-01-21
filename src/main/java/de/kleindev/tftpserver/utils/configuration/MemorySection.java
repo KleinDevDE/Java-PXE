@@ -402,7 +402,7 @@ public class MemorySection implements ConfigurationSection {
                 } catch (Exception ex) {
                 }
             } else if (object instanceof Character) {
-                result.add((int) ((Character) object).charValue());
+                result.add((int) (Character) object);
             } else if (object instanceof Number) {
                 result.add(((Number) object).intValue());
             }
@@ -453,7 +453,7 @@ public class MemorySection implements ConfigurationSection {
                 } catch (Exception ex) {
                 }
             } else if (object instanceof Character) {
-                result.add((double) ((Character) object).charValue());
+                result.add((double) (Character) object);
             } else if (object instanceof Number) {
                 result.add(((Number) object).doubleValue());
             }
@@ -480,7 +480,7 @@ public class MemorySection implements ConfigurationSection {
                 } catch (Exception ex) {
                 }
             } else if (object instanceof Character) {
-                result.add((float) ((Character) object).charValue());
+                result.add((float) (Character) object);
             } else if (object instanceof Number) {
                 result.add(((Number) object).floatValue());
             }
@@ -507,7 +507,7 @@ public class MemorySection implements ConfigurationSection {
                 } catch (Exception ex) {
                 }
             } else if (object instanceof Character) {
-                result.add((long) ((Character) object).charValue());
+                result.add((long) (Character) object);
             } else if (object instanceof Number) {
                 result.add(((Number) object).longValue());
             }
@@ -618,14 +618,14 @@ public class MemorySection implements ConfigurationSection {
     public <T extends ConfigurationSerializable> T getSerializable(String path, Class<T> clazz) {
         Validate.notNull(clazz, "ConfigurationSerializable class cannot be null");
         Object def = getDefault(path);
-        return getSerializable(path, clazz, (def != null && clazz.isInstance(def)) ? clazz.cast(def) : null);
+        return getSerializable(path, clazz, (clazz.isInstance(def)) ? clazz.cast(def) : null);
     }
 
     @Override
     public <T extends ConfigurationSerializable> T getSerializable(String path, Class<T> clazz, T def) {
         Validate.notNull(clazz, "ConfigurationSerializable class cannot be null");
         Object val = get(path);
-        return (val != null && clazz.isInstance(val)) ? clazz.cast(val) : def;
+        return (clazz.isInstance(val)) ? clazz.cast(val) : def;
     }
 
     public ConfigurationSection getConfigurationSection(String path) {

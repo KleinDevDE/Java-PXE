@@ -7,14 +7,16 @@ import java.lang.annotation.RetentionPolicy;
 public interface Command{
     @Inherited
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface ConsoleCommand{
+    @interface ConsoleCommand {
         String command();
+
         String[] aliases() default {};
     }
 
 
-    public void console(String raw, String[] args);
+    void console(String raw, String[] args);
 
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface CommandClass{}
+    @interface CommandClass {
+    }
 }

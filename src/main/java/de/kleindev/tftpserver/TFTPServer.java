@@ -2,15 +2,16 @@ package de.kleindev.tftpserver;
 
 import de.kleindev.tftpserver.objects.*;
 import de.kleindev.tftpserver.utils.LogManager;
-import de.kleindev.tftpserver.objects.*;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramSocket;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 
 public class TFTPServer {
     private static Thread thread;
     private static ArrayList<String> clients = new ArrayList<>();
+    private static boolean shouldstop = false;
 
     public static void startServer(){
         if(thread.isAlive())
@@ -26,7 +27,7 @@ public class TFTPServer {
             LogManager.log(LogType.ERROR, "Server already stopped!", true);
         else {
             LogManager.log(LogType.INFO, "Stopping TFTP Server", true);
-            thread.stop();
+            shouldstop = true;
         }
     }
 
@@ -52,6 +53,10 @@ public class TFTPServer {
 
                 LogManager.log(LogType.TRACE, "TFTPServer.class | init() | while(true) {", true);
                 while (true) {
+                    if (shouldstop) {
+                        shouldstop = false;
+                        return;
+                    }
                     TFTPpacket in = TFTPpacket.receive(sock);
                     LogManager.log(LogType.TRACE, "TFTPServer.class | init() | TFTPacket received", true);
                     LogManager.log(LogType.TRACE, "TFTPServer.class | init() | in instanceof TFTPread", true);
@@ -69,7 +74,6 @@ public class TFTPServer {
                         LogManager.log(LogType.TRACE, "TFTPServer.class | init() | new TFTPserverQRW", true);
                         TFTPserverWRQ w = new TFTPserverWRQ((TFTPwrite) in);
                         LogManager.log(LogType.TRACE, "TFTPServer.class | init() | continue;", true);
-                        continue;
                     }
                 }
             } catch (IOException | TftpException e) {

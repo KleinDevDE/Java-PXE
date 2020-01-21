@@ -1,7 +1,6 @@
 package de.kleindev.tftpserver.utils.configuration.file;
 
 import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 import de.kleindev.tftpserver.utils.configuration.Configuration;
 import de.kleindev.tftpserver.utils.configuration.InvalidConfigurationException;
 import de.kleindev.tftpserver.utils.configuration.MemoryConfiguration;
@@ -50,16 +49,14 @@ public abstract class FileConfiguration extends MemoryConfiguration {
     public void save(File file) throws IOException {
         Validate.notNull(file, "File cannot be null");
 
-        Files.createParentDirs(file);
+        if (!file.mkdirs())
+            throw new RuntimeException("Not all folders could be created!\n" +
+                    "Maybe because of missing permissions.");
 
         String data = saveToString();
 
-        Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8);
-
-        try {
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8)) {
             writer.write(data);
-        } finally {
-            writer.close();
         }
     }
 

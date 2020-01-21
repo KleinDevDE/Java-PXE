@@ -13,6 +13,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Main {
 
@@ -40,11 +41,15 @@ public class Main {
     }
 
     private static void firstRun() {
-        new File("data").mkdir();
+        if (!new File("data").mkdir()) {
+            System.err.println("Could not create data folder!\nShutdown..");
+            System.exit(1);
+        }
         InputStream initialStream = Main.class.getClassLoader().getResourceAsStream("config.yml");
         File targetFile = new File("data/config.yml");
 
         try {
+            assert initialStream != null;
             java.nio.file.Files.copy(
                     initialStream,
                     targetFile.toPath(),
@@ -65,7 +70,7 @@ public class Main {
     }
 
     private static void checkArgs(String[] args) {
-        List<String> stringList = new ArrayList<String>(Arrays.asList(args));
+        List<String> stringList = new ArrayList<>(Arrays.asList(args));
 
         TempData.coloredConsole = stringList.contains("-color");
         TempData.runningAsRoot = stringList.contains("-RunningAsRootIsEvilAndIKnowThat");
@@ -80,9 +85,10 @@ public class Main {
         LogManager.log(LogType.INFO, "Starting config conversion...", true);
         new File("data/config.yml").renameTo(new File("data/config.yml.bkp"));
         //TODO update to YAML format
-        YamlConfiguration config_new = YamlConfiguration.loadConfiguration(new InputStreamReader(Main.class.getClassLoader().getResourceAsStream("config.yml")));
+        YamlConfiguration config_new = YamlConfiguration.loadConfiguration(new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("config.yml"))));
 
 
+        assert config_new != null;
         for (String key : config_new.getKeys(true)) {
             if (configuration.contains(key))
                 config_new.set(key, configuration.get(key));
@@ -126,6 +132,7 @@ public class Main {
                     String[] args = line.replaceFirst(cmd + " ", "").replaceFirst(cmd, "").split(" ");
                     if (CommandManager.isCommand(CommandType.CONSOLE, cmd)) {
                         Command command = CommandManager.getCommand(CommandType.CONSOLE, cmd);
+                        assert command != null;
                         Method[] methods = command.getClass().getMethods();
                         boolean success = false;
                         for (Method m : methods) {
@@ -135,6 +142,7 @@ public class Main {
                                     success = true;
                                     break;
                                 } catch (IllegalAccessException | InvocationTargetException e) {
+                                    throw new RuntimeException(e);
                                 }
                             }
                         }

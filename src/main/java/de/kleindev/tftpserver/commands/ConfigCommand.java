@@ -19,9 +19,6 @@ public class ConfigCommand implements Command {
             return;
         }
         switch (args[0].toLowerCase()){
-            case "help":
-                printHelp();
-                break;
             case "list":
                 StringBuilder sb = new StringBuilder();
                 for (String key : Main.configuration.getKeys(true)){

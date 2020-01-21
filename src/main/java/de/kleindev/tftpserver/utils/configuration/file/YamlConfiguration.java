@@ -9,7 +9,6 @@ import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Map;
@@ -50,7 +49,7 @@ public class YamlConfiguration extends FileConfiguration {
 
         Map<?, ?> input;
         try {
-            input = (Map<?, ?>) yaml.load(contents);
+            input = yaml.load(contents);
         } catch (YAMLException e) {
             throw new InvalidConfigurationException(e);
         } catch (ClassCastException e) {
@@ -116,7 +115,7 @@ public class YamlConfiguration extends FileConfiguration {
         if (options().copyHeader()) {
             Configuration def = getDefaults();
 
-            if ((def != null) && (def instanceof FileConfiguration)) {
+            if ((def instanceof FileConfiguration)) {
                 FileConfiguration filedefaults = (FileConfiguration) def;
                 String defaultsHeader = filedefaults.buildHeader();
 
@@ -178,13 +177,8 @@ public class YamlConfiguration extends FileConfiguration {
 
         try {
             config.load(file);
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
-            System.err.println("Cannot load " + file);
-            System.err.println(ex);
-        } catch (InvalidConfigurationException ex) {
-            System.err.println("Cannot load " + file);
-            System.err.println(ex);
+        } catch (IOException | InvalidConfigurationException ex) {
+            throw new RuntimeException(ex);
         }
 
         return config;
@@ -211,12 +205,8 @@ public class YamlConfiguration extends FileConfiguration {
 
         try {
             config.load(reader);
-        } catch (IOException ex) {
-            System.err.println("Cannot load configuration from stream");
-            System.err.println(ex);
-        } catch (InvalidConfigurationException ex) {
-            System.err.println("Cannot load configuration from stream");
-            System.err.println(ex);
+        } catch (IOException | InvalidConfigurationException ex) {
+            throw new RuntimeException("Cannot load configuration from stream", ex);
         }
 
         return config;

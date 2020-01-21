@@ -36,9 +36,7 @@ public class ConfigurationSerialization {
             }
 
             return method;
-        } catch (NoSuchMethodException ex) {
-            return null;
-        } catch (SecurityException ex) {
+        } catch (NoSuchMethodException | SecurityException ex) {
             return null;
         }
     }
@@ -46,9 +44,7 @@ public class ConfigurationSerialization {
     protected Constructor<? extends ConfigurationSerializable> getConstructor() {
         try {
             return clazz.getConstructor(Map.class);
-        } catch (NoSuchMethodException ex) {
-            return null;
-        } catch (SecurityException ex) {
+        } catch (NoSuchMethodException | SecurityException ex) {
             return null;
         }
     }
@@ -220,7 +216,8 @@ public class ConfigurationSerialization {
      */
     public static void unregisterClass(Class<? extends ConfigurationSerializable> clazz) {
         while (aliases.values().remove(clazz)) {
-            ;
+            // May a temporary fix
+            //TODO
         }
     }
 

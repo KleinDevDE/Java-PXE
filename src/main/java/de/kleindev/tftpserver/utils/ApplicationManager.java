@@ -14,6 +14,7 @@ public class ApplicationManager {
 
     /**
      * Restart the current Java application
+     *
      * @param runBeforeRestart some custom code to be run before restarting
      * @throws IOException
      */
@@ -23,7 +24,7 @@ public class ApplicationManager {
             String java = System.getProperty("java.home") + "/bin/java";
 // vm arguments
             List<String> vmArguments = ManagementFactory.getRuntimeMXBean().getInputArguments();
-            StringBuffer vmArgsOneLine = new StringBuffer();
+            StringBuilder vmArgsOneLine = new StringBuilder();
             for (String arg : vmArguments) {
 // if it's the agent argument : we ignore it otherwise the
 // address of the old application and the new one will be in conflict
@@ -33,7 +34,7 @@ public class ApplicationManager {
                 }
             }
 // init the command to execute, add the vm args
-            final StringBuffer cmd = new StringBuffer(java + " "+ vmArgsOneLine);
+            final StringBuffer cmd = new StringBuffer(java + " " + vmArgsOneLine);
 
 // program main and program arguments
             String[] mainCommand = System.getProperty(SUN_JAVA_COMMAND).split(" ");
@@ -58,11 +59,12 @@ public class ApplicationManager {
                     try {
                         Runtime.getRuntime().exec(cmd.toString());
                     } catch (IOException e) {
-                        }
+                        throw new RuntimeException(e);
+                    }
                 }
             });
 // execute some custom code before restarting
-            if (runBeforeRestart!= null) {
+            if (runBeforeRestart != null) {
                 runBeforeRestart.run();
             }
 // exit

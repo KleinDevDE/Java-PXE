@@ -2,8 +2,11 @@ package de.kleindev.tftpserver.objects;
 
 import de.kleindev.tftpserver.utils.CheckSum;
 
-import java.net.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketTimeoutException;
 
 
 public class TFTPserverWRQ extends Thread {
@@ -46,6 +49,7 @@ public class TFTPserverWRQ extends Thread {
 			try {
 				ePak.send(host, port, sock);
 			} catch (Exception f) {
+				throw new RuntimeException(e);
 			}
 
 			System.out.println("Client start failed:" + e.getMessage());
@@ -98,6 +102,7 @@ public class TFTPserverWRQ extends Thread {
 				try {
 					ePak.send(host, port, sock);
 				} catch (Exception f) {
+					throw new RuntimeException(e);
 				}
 
 				System.out.println("Client failed:  " + e.getMessage());
