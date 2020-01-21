@@ -17,14 +17,15 @@ public class MySQLConnection {
         try {
             connection.close();
         } catch (SQLException e) {
-            }
+            throw new RuntimeException(e);
+        }
     }
 
     public PreparedStatement preparedStatement(String sql){
         try {
             return connection.prepareStatement(sql);
         } catch (SQLException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -32,7 +33,7 @@ public class MySQLConnection {
         try {
             return connection.getWarnings();
         } catch (SQLException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

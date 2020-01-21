@@ -28,7 +28,7 @@ public class TFTPCommand implements Command {
                 LogManager.log(LogType.RAW, TFTPServer.isOnline() ? "TFTPServer is RUNNING" : "TFTPServer is OFFLINE", true);
                 break;
             case "kill":
-                TFTPServer.kilLServer();
+                TFTPServer.killServer();
                 break;
             case "restart":
                 TFTPServer.stopServer();

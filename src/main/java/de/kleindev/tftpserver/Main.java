@@ -52,6 +52,7 @@ public class Main {
                     StandardCopyOption.REPLACE_EXISTING);
             initialStream.close();
         } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -93,7 +94,7 @@ public class Main {
             configuration = config_new;
             LogManager.log(LogType.INFO, "Done!", true);
         } catch (IOException e) {
-            LogManager.log(LogType.ERROR, "An error occurred! See log file for more information's", true);
+            throw new RuntimeException(e);
         }
     }
 
@@ -106,6 +107,7 @@ public class Main {
                     System.exit(1);
                 }
             } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -151,7 +153,7 @@ public class Main {
                 }
             } catch (IOException e) {
                 LogManager.log(LogType.ERROR, "Could not read console input!", true);
-                LogManager.log(LogType.RAW, e.getMessage(), true);
+                throw new RuntimeException(e);
             }
         });
         thread.start();

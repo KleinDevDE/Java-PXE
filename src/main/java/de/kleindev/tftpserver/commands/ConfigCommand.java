@@ -23,10 +23,12 @@ public class ConfigCommand implements Command {
                 printHelp();
                 break;
             case "list":
+                StringBuilder sb = new StringBuilder();
                 for (String key : Main.configuration.getKeys(true)){
                     if(!Main.configuration.isConfigurationSection(key))
-                        LogManager.log(LogType.RAW, "Key: "+key + "\nValue: " + Main.configuration.get(key)+"\n", true);
+                        sb.append(key).append(" -> ").append(Main.configuration.get(key)).append("\n");
                 }
+                LogManager.log(LogType.RAW, sb.toString(), true);
                 break;
             case "set":
                 if (args.length != 3) {
@@ -38,7 +40,7 @@ public class ConfigCommand implements Command {
                     Main.configuration.save(new File("data/config.yml"));
                     LogManager.log(LogType.RAW, "Done!", true);
                 } catch (IOException e) {
-
+                    throw new RuntimeException(e);
                 }
                 break;
             case "get":

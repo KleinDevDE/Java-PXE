@@ -3,7 +3,7 @@
 debug: trace
 
 tftp_server:
-  # Set listening IP if TFTP server
+  # Set listening IP of TFTP server
   ip: "0.0.0.0"
   # Set listening Port of TFTP server (default 69)
   port: 69

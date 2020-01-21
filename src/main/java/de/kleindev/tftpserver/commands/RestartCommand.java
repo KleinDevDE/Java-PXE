@@ -13,6 +13,7 @@ public class RestartCommand implements Command {
         try {
             ApplicationManager.restartApplication(null);
         } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

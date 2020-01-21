@@ -28,7 +28,7 @@ public class Download {
             fos.write(response);
             fos.close();
         }catch (IOException e) {
-
+            throw new RuntimeException(e);
         }
     }
 }

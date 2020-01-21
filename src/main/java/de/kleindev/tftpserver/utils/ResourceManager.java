@@ -63,7 +63,7 @@ public class ResourceManager {
             return tempFile.getAbsolutePath();
 
         } catch (IOException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 }

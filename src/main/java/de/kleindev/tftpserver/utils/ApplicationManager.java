@@ -69,7 +69,7 @@ public class ApplicationManager {
             System.exit(0);
         } catch (Exception e) {
 // something went wrong
-            throw new IOException("Error while trying to restart the application", e);
+            throw new RuntimeException(new IOException("Error while trying to restart the application", e));
         }
     }
 }

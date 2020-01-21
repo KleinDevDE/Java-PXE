@@ -73,7 +73,7 @@ public class TFTPServer {
                     }
                 }
             } catch (IOException | TftpException e) {
-
+                throw new RuntimeException(e);
             }
         });
     }
